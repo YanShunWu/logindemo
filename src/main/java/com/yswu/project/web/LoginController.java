@@ -23,6 +23,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
+ * 注册登陆类
+ *
  * @Author yswu3
  * @Date 2019/10/31.
  */
@@ -78,8 +80,14 @@ public class LoginController {
         UserInfo userInfo = new UserInfo();
         BeanUtils.copyProperties(registerParam, userInfo);
         userInfo.setPassword(UserInfoUtil.getTransedPwd(userInfo.getPassword()));
-        userInfo.setIdCardNum(UserInfoUtil.getDesensitizationResult(userInfo.getIdCardNum()));
-        userInfo.setMobile(UserInfoUtil.getDesensitizationResult(userInfo.getMobile()));
+        try {
+            userInfo.setIdCardNum(UserInfoUtil.getDesensitizationResult(userInfo.getIdCardNum()));
+            userInfo.setMobile(UserInfoUtil.getDesensitizationResult(userInfo.getMobile()));
+        } catch (Exception e) {
+            logger.error(userInfo.toString(), e);
+            model.addAttribute("errorMsg", "手机号或身份证号格式异常！");
+            return "register";
+        }
         userInfoRepository.save(userInfo);
         return "login";
     }

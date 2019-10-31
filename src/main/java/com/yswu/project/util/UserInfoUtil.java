@@ -50,17 +50,11 @@ public class UserInfoUtil {
      * @param originalInfo 原始信息
      * @return 脱敏后的信息
      */
-    public static String getDesensitizationResult(String originalInfo) {
+    public static String getDesensitizationResult(String originalInfo) throws Exception {
         if (Strings.isBlank(originalInfo)) {
             return originalInfo;
         }
-        String result = null;
-        try {
-            result = AESUtil.encrypt(originalInfo, AES_KEY);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
+        return AESUtil.encrypt(originalInfo, AES_KEY);
     }
 
     /**
@@ -69,17 +63,11 @@ public class UserInfoUtil {
      * @param desensitizationInfo 脱敏后的信息
      * @return 还原后的脱敏信息
      */
-    public static String getOriginalInfo(String desensitizationInfo) {
+    public static String getOriginalInfo(String desensitizationInfo) throws Exception {
         if (Strings.isBlank(desensitizationInfo)) {
             return desensitizationInfo;
         }
-        String result = null;
-        try {
-            result = AESUtil.decrypt(desensitizationInfo, AES_KEY);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
+        return AESUtil.decrypt(desensitizationInfo, AES_KEY);
     }
 
 
@@ -92,6 +80,11 @@ public class UserInfoUtil {
         return BCrypt.gensalt(12);
     }
 
+    /**
+     * 生成md5值
+     * @param src
+     * @return
+     */
     private static String md5(String src) {
         return DigestUtils.md5DigestAsHex(src.getBytes());
     }

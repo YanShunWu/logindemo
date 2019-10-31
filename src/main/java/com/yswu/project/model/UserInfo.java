@@ -1,10 +1,11 @@
 package com.yswu.project.model;
 
 
-
 import javax.persistence.*;
 
 /**
+ * 用户信息实体类
+ *
  * @Author yswu3
  * @Date 2019/10/31.
  */
@@ -12,6 +13,7 @@ import javax.persistence.*;
 public class UserInfo {
     public UserInfo() {
     }
+
     public UserInfo(String userName, String passWord, String mobile, String idCardNum) {
         this.userName = userName;
         this.password = passWord;
@@ -20,7 +22,7 @@ public class UserInfo {
     }
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false, unique = true, columnDefinition = "varchar(20)")
@@ -29,7 +31,7 @@ public class UserInfo {
     @Column(nullable = false, columnDefinition = "varchar(255)")
     private String password;
 
-    @Column(nullable = false , columnDefinition = "varchar(50)")
+    @Column(nullable = false, columnDefinition = "varchar(50)")
     private String mobile;
 
     @Column(nullable = false, columnDefinition = "varchar(80)")
@@ -73,5 +75,15 @@ public class UserInfo {
 
     public void setIdCardNum(String idCardNum) {
         this.idCardNum = idCardNum;
+    }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", idCardNum='" + idCardNum + '\'' +
+                '}';
     }
 }

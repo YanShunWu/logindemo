@@ -6,17 +6,19 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 /**
+ * 登陆参数校验
+ *
  * @Author yswu3
  * @Date 2019/10/31.
  */
 public class LoginParam {
-    @NotEmpty(message="姓名不能为空")
-    @Pattern(regexp="^[A-Za-z0-9]+$", message="姓名只能是英文字母或者数字")
+    @NotEmpty(message = "姓名不能为空")
+    @Pattern(regexp = "^[A-Za-z0-9]+$", message = "姓名只能是英文字母或者数字")
     private String loginName;
 
-    @NotEmpty(message="密码不能为空")
-    @Pattern(regexp="^[A-Za-z0-9]+$", message="密码只能是英文字母或者数字")
-    @Length(min=6,message="密码长度不能小于6位")
+    @NotEmpty(message = "密码不能为空")
+    @Pattern(regexp = "^[A-Za-z0-9]+$", message = "密码只能是英文字母或者数字")
+    @Length(min = 6, message = "密码长度不能小于6位")
     @Length(max = 20, message = "密码长度不能超过20位")
     private String password;
 

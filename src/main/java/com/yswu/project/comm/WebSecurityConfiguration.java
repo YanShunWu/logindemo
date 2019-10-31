@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 /**
+ * CSRF防护
+ *
  * @Author yswu3
  * @Date 2019/10/31.
  */
