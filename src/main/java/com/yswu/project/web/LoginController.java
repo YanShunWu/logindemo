@@ -1,11 +1,15 @@
 package com.yswu.project.web;
 
 
+import com.yswu.project.comm.WebConfiguration;
 import com.yswu.project.model.UserInfo;
 import com.yswu.project.param.LoginParam;
 import com.yswu.project.param.RegisterParam;
 import com.yswu.project.repository.UserInfoRepository;
 import com.yswu.project.util.UserInfoUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,25 +28,24 @@ import java.util.List;
  */
 @Controller
 public class LoginController {
-
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private UserInfoRepository userInfoRepository;
 
     @RequestMapping("/")
     public String index(HttpServletRequest request) {
-//        String id = (String) request.getSession().getAttribute(WebConfiguration.LOGIN_KEY);
-//        if (StringUtils.isEmpty(id)) {
-//            return "login";
-//        } else {
-//            return "redirect:/list";
-//        }
-        return "login";
+        String id = (String) request.getSession().getAttribute(WebConfiguration.LOGIN_KEY);
+        if (StringUtils.isEmpty(id)) {
+            return "login";
+        } else {
+            return "success";
+        }
     }
 
     @RequestMapping("/loginOut")
     public String loginOut(HttpServletRequest request) {
-//        request.getSession().removeAttribute(WebConfiguration.LOGIN_KEY);
-//        request.getSession().removeAttribute(WebConfiguration.LOGIN_USER);
+        request.getSession().removeAttribute(WebConfiguration.LOGIN_KEY);
+        request.getSession().removeAttribute(WebConfiguration.LOGIN_USER);
         return "login";
     }
 
@@ -87,7 +90,7 @@ public class LoginController {
         if (result.hasErrors()) {
             List<ObjectError> list = result.getAllErrors();
             for (ObjectError error : list) {
-                errorMsg = errorMsg + error.getCode() + "-" + error.getDefaultMessage() + ";";
+                errorMsg = errorMsg + error.getDefaultMessage() + ";";
             }
             model.addAttribute("errorMsg", errorMsg);
             return "login";
@@ -98,6 +101,8 @@ public class LoginController {
             model.addAttribute("errorMsg", "无效的用户名或密码！");
             return "login";
         }
+        request.getSession().setAttribute(WebConfiguration.LOGIN_KEY, userInfo.getUserName());
+        request.getSession().setAttribute(WebConfiguration.LOGIN_USER, userInfo);
         return "success";
     }
 }

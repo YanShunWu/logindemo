@@ -1,13 +1,13 @@
 package com.yswu.project.repository;
 
 import com.yswu.project.model.UserInfo;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-import java.util.Date;
 
 /**
  * @Author yswu3
@@ -20,13 +20,13 @@ public class UserInfoRepositoryTest {
     private UserInfoRepository userInfoRepository;
 
     @Test
-    public void testSave() {
-        Date date = new Date();
-
-        userInfoRepository.save(new UserInfo("wuyanshun2","11111","123","340"));
-
-//		Assert.assertEquals(3, userRepository.findAll().size());
-//		Assert.assertEquals("bb", userRepository.findByUserNameOrEmail("bb", "bb@126.com").getNickName());
-//		userRepository.delete(userRepository.findByUserName("aa"));
+    public void findByUserNameTest() {
+        UserInfo userInfo = userInfoRepository.findByUserName("findByUserNameTest");
+        if (userInfo == null) {
+            userInfoRepository.save(new UserInfo("findByUserNameTest", "11111", "123", "340"));
+        }
+        userInfo = userInfoRepository.findByUserName("findByUserNameTest");
+        Assert.assertNotNull(userInfo);
     }
+
 }

@@ -9,8 +9,6 @@ import javax.persistence.*;
  * @Date 2019/10/31.
  */
 @Entity
-//@Table(name = "user_info",
-//        indexes = {@Index(name = "idx_user_name", columnList = "userName")})
 public class UserInfo {
     public UserInfo() {
     }
